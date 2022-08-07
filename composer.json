@@ -1,0 +1,16 @@
+{
+    "name": "jankx/fullpage-layout",
+    "description": "Use fullPage.js to create full page layout for Jankx framework theme",
+    "autoload": {
+        "psr-4": {
+            "Jankx\\FullpageLayout\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Puleeno Nguyen",
+            "email": "puleeno@gmail.com"
+        }
+    ],
+    "require": {}
+}
