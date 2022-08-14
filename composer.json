@@ -13,5 +13,16 @@
         }
     ],
     "license": "GPL-3.0-or-later",
-    "require": {}
+    "require": {
+        "jankx/core": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jankx\\FullPage\\": "./src"
+        },
+        "files": [
+            "./fullpage-layout.php"
+        ]
+    }
+
 }
