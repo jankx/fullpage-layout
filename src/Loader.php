@@ -1,16 +1,24 @@
 <?php
 namespace Jankx\FullPage;
 
+use Jankx\Asset\Bucket;
+use Jankx\SiteLayout\SiteLayout;
+
 class Loader
 {
     protected static $instance;
 
+    protected static $currentLayout;
+    protected static $fullPageDirUrl;
+    protected static $fullPageAssetDirUrl;
+
     protected function __construct()
     {
+        $this->bootstrap();
         $this->initHooks();
     }
 
-    public function getInstance()
+    public static function getInstance()
     {
         if (is_null(static::$instance)) {
             static::$instance = new static();
@@ -18,9 +26,24 @@ class Loader
         return static::$instance;
     }
 
+    protected function bootstrap()
+    {
+        static::$fullPageDirUrl = jankx_get_path_url(dirname(JANKX_FULL_PAGE_LAYOUT_LOADER));
+        static::$fullPageAssetDirUrl = sprintf('%s/assets', static::$fullPageDirUrl);
+    }
+
+    protected function getCurrentLayout()
+    {
+        if (is_null(static::$currentLayout)) {
+            static::$currentLayout = SiteLayout::getInstance()->getLayout();
+        }
+        return static::$currentLayout;
+    }
+
     protected function initHooks()
     {
         add_action('init', [$this, 'init']);
+        add_action('wp_enqueue_scripts', [$this, 'registerScripts']);
     }
 
     public function init()
@@ -35,5 +58,40 @@ class Loader
 
             return $layouts;
         });
+        add_filter('body_class', array($this, 'bodyClasses'));
+    }
+
+    public function bodyClasses($classes)
+    {
+        if ($this->getCurrentLayout() === Common::LAYOUT_FULL_PAGE) {
+            $classes[] = SiteLayout::LAYOUT_FULL_WIDTH;
+        }
+        return $classes;
+    }
+
+    public function getAssetUrl($path = '')
+    {
+        if (empty($path)) {
+            return static::$fullPageAssetDirUrl;
+        }
+        return static::$fullPageAssetDirUrl . '/' . $path;
+    }
+
+    public function registerScripts()
+    {
+        if ($this->getCurrentLayout() !== Common::LAYOUT_FULL_PAGE) {
+            return;
+        }
+        $assetBucket = Bucket::instance();
+        $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true)
+            ->localize(
+                'fullpage',
+                apply_filters('jankx/fullpage/objects', [], $this->getCurrentLayout())
+            );
+        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0', true)
+            ->enqueue();
+
+        $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10')
+            ->enqueue();
     }
 }
