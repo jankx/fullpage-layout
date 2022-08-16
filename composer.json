@@ -3,11 +3,11 @@
     "description": "Use fullPage.js to create full page layout for Jankx framework theme",
     "autoload": {
         "psr-4": {
-            "Jankx\\FullPage\\": "src/",
-            "files": [
-                "./fullpage-layout.php"
-            ]
-        }
+            "Jankx\\FullPage\\": "src/"
+        },
+        "files": [
+            "./fullpage-layout.php"
+        ]
     },
     "authors": [
         {
