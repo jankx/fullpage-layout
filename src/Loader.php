@@ -85,7 +85,7 @@ class Loader
         $assetBucket = Bucket::instance();
         $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true)
             ->localize(
-                'fullpage',
+                'jankxFullpage',
                 apply_filters('jankx/fullpage/objects', [], $this->getCurrentLayout())
             );
         $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0', true)
