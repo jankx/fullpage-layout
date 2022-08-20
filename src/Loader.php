@@ -44,6 +44,7 @@ class Loader
     {
         add_action('init', [$this, 'init']);
         add_action('wp_enqueue_scripts', [$this, 'registerScripts']);
+        add_filter('jankx/template/page/header/name', [$this, 'changeHeaderToFullPage']);
     }
 
     public function init()
@@ -83,15 +84,27 @@ class Loader
             return;
         }
         $assetBucket = Bucket::instance();
-        $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true)
+        $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true);
+        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0', true)
             ->localize(
                 'jankxFullpage',
-                apply_filters('jankx/fullpage/objects', [], $this->getCurrentLayout())
-            );
-        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0', true)
+                apply_filters('jankx/fullpage/objects', [
+                    'slidesNavigation' => true,
+                    'slidesNavPosition' => 'right',
+                ], $this->getCurrentLayout())
+            )
             ->enqueue();
 
-        $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10')
+        $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10');
+        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.1')
             ->enqueue();
+    }
+
+    public function changeHeaderToFullPage($headerStyle)
+    {
+        if ($this->getCurrentLayout() === Common::LAYOUT_FULL_PAGE) {
+            return 'fullpage';
+        }
+        return $headerStyle;
     }
 }
