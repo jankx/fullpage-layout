@@ -18,6 +18,7 @@
     "license": "GPL-3.0-or-later",
     "require": {
         "jankx/core": "*",
-        "jankx/asset": "*"
+        "jankx/asset": "*",
+        "jankx/abstractions": "*"
     }
 }

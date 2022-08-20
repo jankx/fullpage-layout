@@ -30,6 +30,10 @@ class Loader
     {
         static::$fullPageDirUrl = jankx_get_path_url(dirname(JANKX_FULL_PAGE_LAYOUT_LOADER));
         static::$fullPageAssetDirUrl = sprintf('%s/assets', static::$fullPageDirUrl);
+
+        $moduleManager = new ModuleManager();
+        $moduleManager->initFeatures();
+        $moduleManager->run();
     }
 
     protected function getCurrentLayout()
