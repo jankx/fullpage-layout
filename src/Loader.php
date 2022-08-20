@@ -44,7 +44,8 @@ class Loader
     {
         add_action('init', [$this, 'init']);
         add_action('wp_enqueue_scripts', [$this, 'registerScripts']);
-        add_filter('jankx/template/page/header/name', [$this, 'changeHeaderToFullPage']);
+        add_filter('jankx/template/page/header/name', [$this, 'changeHeaderAndFooterStyleToFullPage']);
+        add_filter('jankx/template/page/footer/name', [$this, 'changeHeaderAndFooterStyleToFullPage']);
     }
 
     public function init()
@@ -91,6 +92,7 @@ class Loader
                 apply_filters('jankx/fullpage/objects', [
                     'slidesNavigation' => true,
                     'slidesNavPosition' => 'right',
+                    'menu' => '#mobile-menu',
                 ], $this->getCurrentLayout())
             )
             ->enqueue();
@@ -100,7 +102,7 @@ class Loader
             ->enqueue();
     }
 
-    public function changeHeaderToFullPage($headerStyle)
+    public function changeHeaderAndFooterStyleToFullPage($headerStyle)
     {
         if ($this->getCurrentLayout() === Common::LAYOUT_FULL_PAGE) {
             return 'fullpage';
