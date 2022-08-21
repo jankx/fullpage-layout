@@ -5,6 +5,7 @@ use Jankx\Abstractions\Abstracts\Module;
 use Jankx\Abstractions\ModuleLoader;
 use Jankx\FullPage\Features\FullPageHeader;
 use Jankx\FullPage\Features\FullPageMenu;
+use Jankx\FullPage\Features\NavigateIcon;
 
 class ModuleManager
 {
@@ -16,7 +17,8 @@ class ModuleManager
             'jankx/fullpage/modules',
             [
                 FullPageMenu::class,
-                FullPageHeader::class
+                FullPageHeader::class,
+                NavigateIcon::class,
             ]
         );
     }

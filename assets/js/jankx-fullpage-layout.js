@@ -4,8 +4,11 @@ if (jankxFullpage.backendEnabled) {
     var initialized = false
     var fullPageOptions = {
         sectionSelector: jankxFullpage.sectionSelector || '.section',
-        credits: jankxFullpage.credits || {}
+        credits: jankxFullpage.credits || {},
+        navigation: (jankxFullpage.navigation || 1) == 1,
+        navigationPosition: jankxFullpage.navigationPosition || 'right',
     };
+
     var jankxFullpage = new fullpage('.jankx-fullpage-wrapper', fullPageOptions);
     initialized = true;
 

@@ -1,3 +1,5 @@
+@import "./animate";
+
 .elementor-section {
     &.fp-section {
         >.elementor-container {
@@ -13,6 +15,70 @@
     left: 0;
     width: 100%;
     z-index: 9999;
+}
+
+.wheel {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    transition: opacity .3s ease-in-out;
+    pointer-events: none;
+    z-index: 20;
+    span {
+        position: absolute;
+        width: 40%;
+        left: 30%;
+        top: 30%;
+        height: 2px;
+        transform: scale(.3);
+        animation: Move-Arrow 2s ease-out infinite;
+
+        &:first-child{
+            animation: Move-Arrow 2s ease-out .5s infinite;
+        }
+        &:nth-child(2) {
+            animation: Move-Arrow 2s ease-out 1s infinite;
+        }
+
+        &:before,&:after {
+            content: "";
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            background-color: #d0b179;
+        }
+        &:before {
+            left: 0;
+            transform: skewY(30deg);
+        }
+        &:after {
+            right: 0;
+            width: 50%;
+            transform: skewY(-30deg);
+        }
+    }
+}
+
+.jankx-fullpage-navigate {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .navigate-icon {
+        max-height: 60px;
+        cursor: pointer;
+        svg {
+            max-height: 60px;
+        }
+    }
+
+    .wheel {
+        animation: Start 2s steps(1) 0s 1 normal both;
+    }
 }
 
 body {

@@ -3,6 +3,7 @@ namespace Jankx\FullPage;
 
 use Jankx;
 use Jankx\Asset\Bucket;
+use Jankx\GlobalVariables;
 use Jankx\SiteLayout\SiteLayout;
 
 class Loader
@@ -93,21 +94,22 @@ class Loader
         }
         $assetBucket = Bucket::instance();
         $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true);
-        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0.0', true)
+        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0.16', true)
             ->localize(
                 'jankxFullpage',
                 apply_filters('jankx/fullpage/objects', [
-                    'slidesNavigation' => true,
-                    'slidesNavPosition' => 'right',
+                    'navigation' => true,
+                    'navigationPosition' => 'right',
                     'backendEnabled' => static::checkFullPageEnabled(),
                     'mobileAllowed' => static::checkMobileIsAllow(),
                     'mobileBreakpoint' => 678,
+                    'lastSlideAction' => GlobalVariables::get('fullpage.navigate.lastAction', 'top'),
                 ], $this->getCurrentLayout())
             )
             ->enqueue();
 
         $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10');
-        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0.6')
+        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0.16')
             ->enqueue();
     }
 
