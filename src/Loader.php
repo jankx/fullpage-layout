@@ -1,12 +1,15 @@
 <?php
 namespace Jankx\FullPage;
 
+use Jankx;
 use Jankx\Asset\Bucket;
 use Jankx\SiteLayout\SiteLayout;
 
 class Loader
 {
     protected static $instance;
+
+    protected static $enabled;
 
     protected static $currentLayout;
     protected static $fullPageDirUrl;
@@ -90,19 +93,21 @@ class Loader
         }
         $assetBucket = Bucket::instance();
         $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true);
-        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0', true)
+        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0.0', true)
             ->localize(
                 'jankxFullpage',
                 apply_filters('jankx/fullpage/objects', [
                     'slidesNavigation' => true,
                     'slidesNavPosition' => 'right',
-                    'menu' => '#mobile-menu',
+                    'backendEnabled' => static::checkFullPageEnabled(),
+                    'mobileAllowed' => static::checkMobileIsAllow(),
+                    'mobileBreakpoint' => 678,
                 ], $this->getCurrentLayout())
             )
             ->enqueue();
 
         $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10');
-        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0')
+        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0.6')
             ->enqueue();
     }
 
@@ -112,5 +117,21 @@ class Loader
             return 'fullpage';
         }
         return $headerStyle;
+    }
+
+    public static function checkMobileIsAllow()
+    {
+        return apply_filters('jankx/site/layout/fullpage/mobile/enabled', false);
+    }
+
+    /**
+     * @return boolean
+     */
+    public static function checkFullPageEnabled()
+    {
+        if (is_null(static::$enabled)) {
+            static::$enabled = !Jankx::device()->isMobile() || static::checkMobileIsAllow();
+        }
+        return boolval(static::$enabled);
     }
 }

@@ -6,3 +6,32 @@
         }
     }
 }
+
+.jankx-site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+
+body {
+    &.admin-bar {
+        &.jankx-fullpage {
+            .jankx-site-header {
+                top: 32px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 782px) {
+    body {
+        &.admin-bar {
+            &.jankx-fullpage {
+                .jankx-site-header {
+                    top: 46px;
+                }
+            }
+        }
+    }
+}
