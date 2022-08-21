@@ -102,7 +102,7 @@ class Loader
             ->enqueue();
 
         $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10');
-        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.1')
+        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0')
             ->enqueue();
     }
 

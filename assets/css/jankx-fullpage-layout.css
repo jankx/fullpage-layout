@@ -1,4 +1,4 @@
-.elementor-section.fp-section .elementor-container {
+.elementor-section.fp-section > .elementor-container {
   height: 100%;
   width: 100%;
 }
