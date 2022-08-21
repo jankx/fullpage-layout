@@ -1,6 +1,8 @@
 <?php
 namespace Jankx\FullPage;
 
+use Jankx\Abstractions\Abstracts\Module;
+use Jankx\Abstractions\ModuleLoader;
 use Jankx\FullPage\Features\FullPageMenu;
 
 class ModuleManager
@@ -20,9 +22,10 @@ class ModuleManager
     public function run()
     {
         foreach ($this->modules as $moduleClass) {
-            if (!is_a($moduleClass, Module::class)) {
+            if (!is_a($moduleClass, Module::class, true)) {
                 continue;
             }
+            new ModuleLoader($moduleClass, 'init');
         }
     }
 }
