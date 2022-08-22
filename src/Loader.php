@@ -94,7 +94,7 @@ class Loader
         }
         $assetBucket = Bucket::instance();
         $assetBucket->js('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.js'), [], '4.0.10', true);
-        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0.16', true)
+        $assetBucket->js('jankx-fullpage-layout', $this->getAssetUrl('js/jankx-fullpage-layout.js'), ['fullpage'], '1.0.0.19', true)
             ->localize(
                 'jankxFullpage',
                 apply_filters('jankx/fullpage/objects', [
@@ -109,7 +109,7 @@ class Loader
             ->enqueue();
 
         $assetBucket->css('fullpage', $this->getAssetUrl('lib/fullPagejs/fullpage.min.css'), [], '4.0.10');
-        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0.16')
+        $assetBucket->css('jankx-fullpage-layout', $this->getAssetUrl('css/jankx-fullpage-layout.css'), ['fullpage'], '1.0.0.19')
             ->enqueue();
     }
 

@@ -620,8 +620,9 @@
   }
 }
 .elementor-section.fp-section > .elementor-container {
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
 }
 
 .jankx-site-header {
@@ -690,6 +691,10 @@
 }
 .jankx-fullpage-navigate .wheel {
   animation: Start 2s steps(1) 0s 1 normal both;
+}
+
+.navigate-icon.top {
+  display: none;
 }
 
 body.admin-bar.jankx-fullpage .jankx-site-header {

@@ -18,6 +18,13 @@ class FullPageMenu extends Module
 
         add_filter('jankx/component/header/preset/default/menu_location', [$this, 'changeMenuLocation']);
         add_filter('jankx/layout/site/menu/itemtypes', [$this, 'addSubmenuFullPage']);
+
+        add_filter('jankx_site_layout_nav_item_callback', function ($callable, $item) {
+            if ($item->type !== 'fullpage_submenu') {
+                return $callable;
+            }
+            return [$this, 'render'];
+        }, 10, 3);
     }
 
     public function changeMenuLocation($location)
@@ -33,5 +40,10 @@ class FullPageMenu extends Module
         $items['fullpage_submenu'] = __('FullPage Menu', 'jankx');
 
         return $items;
+    }
+
+    public function render($item)
+    {
+        return apply_filters('the_title', '', $item->ID);
     }
 }
